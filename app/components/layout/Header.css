@@ -1,0 +1,7 @@
+header {
+    @apply navbar bg-base-100 lg:container lg:mx-auto gap-2;
+}
+
+header a {
+    @apply text-black no-underline;
+}

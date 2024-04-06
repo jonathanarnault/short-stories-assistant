@@ -6,6 +6,11 @@ import {
 	ScrollRestoration,
 } from "@remix-run/react";
 
+import { Footer } from "~/components/layout/Footer";
+import { Header } from "~/components/layout/Header";
+
+import "./root.css";
+
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
@@ -25,5 +30,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-	return <Outlet />;
+	return (
+		<>
+			<Header />
+			<main>
+				<Outlet />
+			</main>
+			<Footer />
+		</>
+	);
 }
