@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply bg-white min-h-full flex;
+}
+
+body {
+    @apply flex flex-col flex-1;
+}
+
+body main {
+    @apply flex-grow lg:container lg:mx-auto flex flex-col gap-4 p-2;
+}
+
+a {
+    @apply underline text-sky-500;
+}
+
+a:hover {
+    @apply no-underline;
+}
