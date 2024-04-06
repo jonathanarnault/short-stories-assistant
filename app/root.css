@@ -15,7 +15,8 @@ body main {
 }
 
 a {
-    @apply underline text-sky-500;
+    @apply underline;
+    color: oklch(var(--n));
 }
 
 a:hover {
