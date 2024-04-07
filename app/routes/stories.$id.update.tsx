@@ -11,10 +11,15 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
 	const form = await request.formData();
 
+	const titleData = form.get("title") ?? "";
 	const summaryData = form.get("summary") ?? "";
 	const contentData = form.get("content") ?? "";
 
-	if (typeof contentData !== "string" || typeof summaryData !== "string") {
+	if (
+		typeof contentData !== "string" ||
+		typeof titleData !== "string" ||
+		typeof summaryData !== "string"
+	) {
 		return redirect(`/stories/${id}/view`);
 	}
 
@@ -25,16 +30,18 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
 	return json({
 		id,
+		title: titleData.trim() || null,
 		summary: summaryData.trim() || null,
 		content,
 	});
 }
 
 export async function clientAction({ serverAction }: ClientActionFunctionArgs) {
-	const { id, summary, content } = await serverAction<typeof action>();
+	const { id, title, summary, content } = await serverAction<typeof action>();
 
 	const story = await storyUpdate({
 		id,
+		title,
 		summary,
 		content,
 	});

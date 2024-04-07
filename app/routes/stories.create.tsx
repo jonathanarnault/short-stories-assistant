@@ -25,6 +25,7 @@ export async function clientAction({ serverAction }: ClientActionFunctionArgs) {
 	const { content } = await serverAction<typeof action>();
 
 	const story = await storyCreate({
+		title: null,
 		image: null,
 		summary: null,
 		content,

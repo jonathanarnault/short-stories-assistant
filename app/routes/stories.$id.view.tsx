@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { Suspense } from "react";
 import { storyFindById, storyUpdate } from "~/commons/db.client";
-import { summarize } from "~/commons/service.client";
+import { generateImage, summarize } from "~/commons/service.client";
 import { Loader } from "~/components/Loader";
 
 export function loader({ params }: LoaderFunctionArgs) {
@@ -30,9 +30,21 @@ export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
 		return redirect("/");
 	}
 
+	const getTitle = async () => {
+		if (!story.title) {
+			story.title = await summarize(story.content, 24);
+			await storyUpdate({
+				id: story.id,
+				title: story.title,
+			});
+		}
+
+		return story.title;
+	};
+
 	const getSummary = async () => {
 		if (!story.summary) {
-			story.summary = await summarize(story.content);
+			story.summary = await summarize(story.content, 512);
 			await storyUpdate({
 				id: story.id,
 				summary: story.summary,
@@ -42,13 +54,33 @@ export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
 		return story.summary;
 	};
 
+	const summary = getSummary();
+
+	const image = getSummary().then(async (summary) => {
+		if (!summary) {
+			return "";
+		}
+
+		if (!story.image) {
+			story.image = await generateImage(summary);
+			await storyUpdate({
+				id: story.id,
+				image: story.image,
+			});
+		}
+
+		return story.image;
+	});
+
 	const { content } = story;
 	return {
 		id,
 		story: {
 			id,
+			image: image,
 			content,
-			summary: getSummary(),
+			title: getTitle(),
+			summary,
 		},
 	};
 }
@@ -67,6 +99,37 @@ export default function StoryDetail() {
 			action={`/stories/${story.id}/update`}
 			method="POST"
 		>
+			<div className="flex flex-col gap-1 h-32">
+				<Suspense fallback={<Loader />}>
+					<Await resolve={story.image}>
+						{(image) => (
+							<img
+								src={image}
+								alt="Story cover"
+								className="h-full object-contain"
+							/>
+						)}
+					</Await>
+				</Suspense>
+			</div>
+
+			<div className="flex flex-col gap-1">
+				<label htmlFor="title">Title</label>
+				<Suspense fallback={<Loader />}>
+					<Await resolve={story.title}>
+						{(title) => (
+							<input
+								type="text"
+								id="title"
+								name="title"
+								defaultValue={title}
+								className="input input-primary"
+							/>
+						)}
+					</Await>
+				</Suspense>
+			</div>
+
 			<div className="flex flex-col gap-1 h-32">
 				<label htmlFor="summary">Abstract</label>
 				<Suspense fallback={<Loader />}>
