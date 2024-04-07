@@ -3,7 +3,7 @@ import type { RoleScopedChatInput } from "@cloudflare/ai/dist/ai/tasks/text-gene
 import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { CREATE_STORY_SYSTEM_PROMPT } from "~/commons/const.server";
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+export async function loader({ request, context }: LoaderFunctionArgs) {
 	const ai = new Ai(context.cloudflare.env.AI);
 	const { searchParams } = new URL(request.url);
 
@@ -32,4 +32,4 @@ export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 			"Content-Type": "text/event-stream",
 		},
 	});
-};
+}
