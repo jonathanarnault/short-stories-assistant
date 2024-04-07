@@ -60,7 +60,15 @@ export default function Index() {
 				action="/stories/new"
 				method="POST"
 			>
-				<label htmlFor="promp">Prompt for a story</label>
+				<label htmlFor="model">Model used for story generation</label>
+
+				<select name="model" className="select select-primary" id="model">
+					<option value="mistral-7b">Mistral 7B</option>
+					<option value="llama2-7b">LLAMA 2 7B</option>
+					<option value="llama2-13b">LLAMA 2 13B</option>
+				</select>
+
+				<label htmlFor="prompt">Prompt for a story</label>
 
 				<textarea
 					id="prompt"

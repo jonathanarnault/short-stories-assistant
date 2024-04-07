@@ -9,14 +9,16 @@ export function meta(): MetaDescriptor[] {
 
 export async function action({ request }: ActionFunctionArgs) {
 	const form = await request.formData();
+	const model = form.get("model") ?? "";
 	const prompt = form.get("prompt");
 
-	if (!prompt || typeof prompt !== "string") {
+	if (!prompt || typeof prompt !== "string" || typeof model !== "string") {
 		return redirect("/");
 	}
 
 	return json({
 		prompt,
+		model,
 	});
 }
 
@@ -36,9 +38,13 @@ export default function StoriesNew() {
 		}
 
 		setSource(
-			new EventSource(`/stream/stories/new?prompt=${actionData.prompt}`),
+			new EventSource(
+				`/stream/stories/new?prompt=${actionData.prompt}&model=${
+					actionData.model ?? ""
+				}`,
+			),
 		);
-	}, [actionData?.prompt, navigate]);
+	}, [actionData?.prompt, actionData?.model, navigate]);
 
 	useEffect(() => {
 		if (!source) {
