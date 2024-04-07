@@ -26,7 +26,7 @@ export function Header() {
 
 			<div className="flex-1">
 				<Link className="text-xl" to="/">
-					Short Stories
+					Short Stories Assistant
 				</Link>
 			</div>
 		</header>
