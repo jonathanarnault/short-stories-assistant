@@ -85,7 +85,7 @@ export async function storyFindById(id: Story["id"]): Promise<Story | null> {
 }
 
 export async function storyUpdate(
-	storyData: Omit<Story, "image">,
+	storyData: Pick<Story, "id"> & Partial<Story>,
 ): Promise<Story | null> {
 	const story = await storyFindById(storyData.id);
 	if (!story) {

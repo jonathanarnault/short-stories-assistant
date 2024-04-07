@@ -1,4 +1,4 @@
-const STORY_LENGTH = 1000;
+const STORY_LENGTH = 2000;
 
 export const CREATE_STORY_SYSTEM_PROMPT = `You are a writer that specializes in writing short stories. 
 

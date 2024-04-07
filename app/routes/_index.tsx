@@ -24,7 +24,7 @@ export default function Index() {
 				id="prompt"
 				name="prompt"
 				className="textarea textarea-primary resize-none flex-grow"
-				defaultValue="a love story between and angel and a demon"
+				defaultValue="A love story between an angel and a demon. The angel is named Seraphina. The demon is named Aamon. They fall in love after a battle between angels and demons."
 			/>
 
 			<div className="w-full grid grid-cols-1 gap-2 lg:grid-cols-4">

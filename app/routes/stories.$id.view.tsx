@@ -1,10 +1,14 @@
 import { json, redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare";
 import {
+	Await,
 	Form,
 	useLoaderData,
 	type ClientLoaderFunctionArgs,
 } from "@remix-run/react";
-import { storyFindById } from "~/commons/db.client";
+import { Suspense } from "react";
+import { storyFindById, storyUpdate } from "~/commons/db.client";
+import { summarize } from "~/commons/service.client";
+import { Loader } from "~/components/Loader";
 
 export function loader({ params }: LoaderFunctionArgs) {
 	const id = params.id ? Number.parseInt(params.id, 10) : null;
@@ -26,10 +30,27 @@ export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
 		return redirect("/");
 	}
 
-	return json({
+	const getSummary = async () => {
+		if (!story.summary) {
+			story.summary = await summarize(story.content);
+			await storyUpdate({
+				id: story.id,
+				summary: story.summary,
+			});
+		}
+
+		return story.summary;
+	};
+
+	const { content } = story;
+	return {
 		id,
-		story,
-	});
+		story: {
+			id,
+			content,
+			summary: getSummary(),
+		},
+	};
 }
 
 clientLoader.hydrate = true;
@@ -48,12 +69,18 @@ export default function StoryDetail() {
 		>
 			<div className="flex flex-col gap-1 h-32">
 				<label htmlFor="summary">Abstract</label>
-				<textarea
-					id="summary"
-					name="summary"
-					defaultValue={story.summary ?? ""}
-					className="textarea textarea-primary resize-none flex-grow"
-				/>
+				<Suspense fallback={<Loader />}>
+					<Await resolve={story.summary}>
+						{(summary) => (
+							<textarea
+								id="summary"
+								name="summary"
+								defaultValue={summary}
+								className="textarea textarea-primary resize-none flex-grow"
+							/>
+						)}
+					</Await>
+				</Suspense>
 			</div>
 
 			<div className="flex flex-grow flex-col gap-1">
