@@ -23,8 +23,6 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 		model = "mistral-7b";
 	}
 
-	console.log("Generating text using model", model);
-
 	const prompt = searchParams.get("prompt");
 	if (!prompt || typeof prompt !== "string") {
 		throw new Response(null, {

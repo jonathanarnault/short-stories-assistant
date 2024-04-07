@@ -38,6 +38,27 @@ function storyKey(id: Story["id"]) {
 	return `story:${id}`;
 }
 
+export async function storyList(): Promise<Story[]> {
+	const db = await openStoryDb();
+	const store = db
+		.transaction(STORY_STORE_NAME, "readwrite")
+		.objectStore(STORY_STORE_NAME);
+
+	return new Promise((resolve, reject) => {
+		const request = store.getAll();
+
+		request.onerror = (error) => {
+			console.error("Failed to create story", error);
+			reject(error);
+		};
+
+		request.onsuccess = () => {
+			const stories = request.result as Story[];
+			resolve(stories.sort((a, b) => b.id - a.id));
+		};
+	});
+}
+
 export async function storyCreate(story: Omit<Story, "id">): Promise<Story> {
 	const createdStory: Story = {
 		...story,

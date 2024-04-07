@@ -122,7 +122,7 @@ export default function StoryDetail() {
 								type="text"
 								id="title"
 								name="title"
-								defaultValue={title}
+								value={title}
 								className="input input-primary"
 							/>
 						)}
@@ -138,7 +138,7 @@ export default function StoryDetail() {
 							<textarea
 								id="summary"
 								name="summary"
-								defaultValue={summary}
+								value={summary}
 								className="textarea textarea-primary resize-none flex-grow"
 							/>
 						)}
@@ -151,7 +151,7 @@ export default function StoryDetail() {
 				<textarea
 					id="content"
 					name="content"
-					defaultValue={story.content}
+					value={story.content}
 					className="textarea textarea-primary resize-none flex-grow"
 				/>
 			</div>

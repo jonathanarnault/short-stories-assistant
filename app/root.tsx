@@ -4,11 +4,14 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	json,
+	useLoaderData,
 } from "@remix-run/react";
 
 import { Footer } from "~/components/layout/Footer";
 import { Header } from "~/components/layout/Header";
 
+import { storyList } from "~/commons/db.client";
 import "./root.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -29,10 +32,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
+export async function loader() {
+	return json({
+		stories: [],
+	});
+}
+
+export async function clientLoader() {
+	const stories = await storyList();
+	return {
+		stories,
+	};
+}
+
+clientLoader.hydrate = true;
+
 export default function App() {
+	const { stories } = useLoaderData<typeof clientLoader>();
 	return (
 		<>
-			<Header />
+			<Header stories={stories} />
 			<main>
 				<Outlet />
 			</main>
