@@ -15,8 +15,7 @@ body main {
 }
 
 a {
-    @apply underline;
-    color: oklch(var(--n));
+    @apply underline text-primary;
 }
 
 a:hover {

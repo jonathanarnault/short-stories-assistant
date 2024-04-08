@@ -1,43 +1,24 @@
-# Welcome to Remix + Vite!
+# Short Stories Assistant
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
+*This repository is a submission for the [Cloudflare AI Challenge](https://dev.to/devteam/join-us-for-the-cloudflare-ai-challenge-3000-in-prizes-5f99).*
 
-## Typegen
+## Commands
 
-Generate types for your Cloudflare bindings in `wrangler.toml`:
-
-```sh
-npm run typegen
-```
-
-You will need to rerun typegen whenever you make changes to `wrangler.toml`.
-
-## Development
-
-Run the Vite dev server:
+### Install dependencies
 
 ```sh
-npm run dev
+npm install
 ```
 
-To run Wrangler:
+### Development
+
+Run the wrangler preview using the following command:
 
 ```sh
-npm run build
-npm run start
+npm run preview
 ```
 
-## Deployment
-
-> [!WARNING]  
-> Cloudflare does _not_ use `wrangler.toml` to configure deployment bindings.
-> You **MUST** [configure deployment bindings manually in the Cloudflare dashboard][bindings].
-
-First, build your app for production:
-
-```sh
-npm run build
-```
+### Deployment
 
 Then, deploy your app to Cloudflare Pages:
 
@@ -45,4 +26,9 @@ Then, deploy your app to Cloudflare Pages:
 npm run deploy
 ```
 
-[bindings]: https://developers.cloudflare.com/pages/functions/bindings/
+## Disclaimer
+
+As far as the law allows, the software comes as is, without any warranty or
+condition, and the licensor will not be liable to you for any damages arising
+out of these terms or the use or nature of the software, under any kind of
+legal claim.

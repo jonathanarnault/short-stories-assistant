@@ -5,15 +5,14 @@
 	"type": "module",
 	"scripts": {
 		"build": "remix vite:build",
-		"deploy": "npm run build && wrangler pages deploy ./build/client",
-		"dev": "remix vite:dev",
 		"start": "wrangler pages dev ./build/client",
-		"preview": "npm run build && wrangler pages dev ./build/client",
+		"preview": "npm run build && npm start",
+		"dev": "remix vite:dev",
+		"deploy": "npm run build && wrangler pages deploy ./build/client",
 		"lint:check": "biome check * **/*",
 		"lint:apply": "biome check --apply * **/*",
 		"typecheck": "tsc",
-		"typegen": "wrangler types",
-		"build-cf-types": "wrangler types"
+		"typegen": "wrangler types"
 	},
 	"dependencies": {
 		"@remix-run/cloudflare": "^2.8.1",

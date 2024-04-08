@@ -99,54 +99,58 @@ export default function StoryDetail() {
 			action={`/stories/${story.id}/update`}
 			method="POST"
 		>
-			<div className="flex flex-col gap-1 h-32">
-				<Suspense fallback={<Loader />}>
-					<Await resolve={story.image}>
-						{(image) => (
-							<img
-								src={image}
-								alt="Story cover"
-								className="h-full object-contain"
-							/>
-						)}
-					</Await>
-				</Suspense>
+			<div className="flex flex-col lg:flex-row gap-2">
+				<div className="flex flex-col gap-1 lg:w-64 h-64">
+					<Suspense fallback={<Loader />}>
+						<Await resolve={story.image}>
+							{(image) => (
+								<img
+									src={image}
+									alt="Story cover"
+									className="h-full object-contain"
+								/>
+							)}
+						</Await>
+					</Suspense>
+				</div>
+
+				<div className="flex flex-grow flex-col gap-2 h-64">
+					<div className="flex flex-col gap-1">
+						<label htmlFor="title">Title</label>
+						<Suspense fallback={<Loader />}>
+							<Await resolve={story.title}>
+								{(title) => (
+									<input
+										type="text"
+										id="title"
+										name="title"
+										value={title}
+										className="input input-primary"
+									/>
+								)}
+							</Await>
+						</Suspense>
+					</div>
+
+					<div className="flex flex-col gap-1 flex-grow">
+						<label htmlFor="summary">Abstract</label>
+						<Suspense fallback={<Loader />}>
+							<Await resolve={story.summary}>
+								{(summary) => (
+									<textarea
+										id="summary"
+										name="summary"
+										value={summary}
+										className="textarea textarea-primary resize-none flex-grow"
+									/>
+								)}
+							</Await>
+						</Suspense>
+					</div>
+				</div>
 			</div>
 
-			<div className="flex flex-col gap-1">
-				<label htmlFor="title">Title</label>
-				<Suspense fallback={<Loader />}>
-					<Await resolve={story.title}>
-						{(title) => (
-							<input
-								type="text"
-								id="title"
-								name="title"
-								value={title}
-								className="input input-primary"
-							/>
-						)}
-					</Await>
-				</Suspense>
-			</div>
-
-			<div className="flex flex-col gap-1 h-32">
-				<label htmlFor="summary">Abstract</label>
-				<Suspense fallback={<Loader />}>
-					<Await resolve={story.summary}>
-						{(summary) => (
-							<textarea
-								id="summary"
-								name="summary"
-								value={summary}
-								className="textarea textarea-primary resize-none flex-grow"
-							/>
-						)}
-					</Await>
-				</Suspense>
-			</div>
-
-			<div className="flex flex-grow flex-col gap-1">
+			<div className="flex flex-grow flex-col gap-1 min-h-80">
 				<label htmlFor="content">Story</label>
 				<textarea
 					id="content"

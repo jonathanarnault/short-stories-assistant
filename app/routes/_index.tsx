@@ -63,9 +63,9 @@ export default function Index() {
 				<label htmlFor="model">Model used for story generation</label>
 
 				<select name="model" className="select select-primary" id="model">
+					<option value="falcon-7b">Falcon 7B</option>
 					<option value="mistral-7b">Mistral 7B</option>
-					<option value="llama2-7b">LLAMA 2 7B</option>
-					<option value="llama2-13b">LLAMA 2 13B</option>
+					<option value="llama2-13b">Llama 2 13B</option>
 				</select>
 
 				<label htmlFor="prompt">Prompt for a story</label>

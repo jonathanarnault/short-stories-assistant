@@ -5,12 +5,12 @@ import { CREATE_STORY_SYSTEM_PROMPT } from "~/commons/const.server";
 
 type SupportedModelTypes =
 	| "@cf/mistral/mistral-7b-instruct-v0.1"
-	| "@cf/meta/llama-2-7b-chat-int8"
+	| "@cf/tiiuae/falcon-7b-instruct"
 	| "@hf/thebloke/llama-2-13b-chat-awq";
 
 const SUPPORTED_MODELS: Record<string, SupportedModelTypes> = {
 	"mistral-7b": "@cf/mistral/mistral-7b-instruct-v0.1",
-	"llama2-7b": "@cf/meta/llama-2-7b-chat-int8",
+	"flacon-7b": "@cf/tiiuae/falcon-7b-instruct",
 	"llama2-13b": "@hf/thebloke/llama-2-13b-chat-awq",
 };
 
